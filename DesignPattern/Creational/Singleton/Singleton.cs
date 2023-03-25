@@ -1,5 +1,5 @@
-﻿using MoreLinq;
-using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MoreLinq;
 using static System.Console;
 
 namespace DesignPattern.Creational.Singleton
@@ -20,13 +20,13 @@ namespace DesignPattern.Creational.Singleton
             WriteLine("Initializing database");
 
             capitals = File.ReadAllLines(
-              Path.Combine(
-                new FileInfo(typeof(IDatabase).Assembly.Location).DirectoryName, "capitals.txt")
-              )
-              .Batch(2)
-              .ToDictionary(
-                list => list.ElementAt(0).Trim(),
-                list => int.Parse(list.ElementAt(1)));
+                    Path.Combine(
+                        new FileInfo(typeof(IDatabase).Assembly.Location).DirectoryName, "capitals.txt")
+                )
+                .Batch(2)
+                .ToDictionary(
+                    list => list.ElementAt(0).Trim(),
+                    list => int.Parse(list.ElementAt(1)));
         }
 
         public int GetPopulation(string name)
@@ -89,39 +89,38 @@ namespace DesignPattern.Creational.Singleton
     /// <summary>
     /// IMPORTANT: be sure to turn off shadow copying for unit tests in R#!
     /// </summary>
-    [TestFixture]
+    [TestClass]
     public class SingletonTests
     {
-        [Test]
+        [TestMethod]
         public void IsSingletonTest()
         {
             var db = SingletonDatabase.Instance;
             var db2 = SingletonDatabase.Instance;
-            Assert.That(db, Is.SameAs(db2));
-            Assert.That(SingletonDatabase.Count, Is.EqualTo(1));
+            Assert.AreSame(db, db2);
+            Assert.AreEqual(SingletonDatabase.Count, 1);
         }
 
-        [Test]
+        [TestMethod]
         public void SingletonTotalPopulationTest()
         {
             // testing on a live database
             var rf = new SingletonRecordFinder();
             var names = new[] { "Seoul", "Mexico City" };
             int tp = rf.TotalPopulation(names);
-            Assert.That(tp, Is.EqualTo(17500000 + 17400000));
+            Assert.AreEqual(tp, 17500000 + 17400000);
         }
 
-        [Test]
+        [TestMethod]
         public void DependantTotalPopulationTest()
         {
             var db = new DummyDatabase();
             var rf = new ConfigurableRecordFinder(db);
-            Assert.That(
-              rf.GetTotalPopulation(new[] { "alpha", "gamma" }),
-              Is.EqualTo(4));
+            Assert.AreEqual(rf.GetTotalPopulation(new[] { "alpha", "gamma" }), 4);
         }
     }
-    internal class Singleton : IExecute
+
+    public class Singleton : IExecute
     {
         public void Execute()
         {

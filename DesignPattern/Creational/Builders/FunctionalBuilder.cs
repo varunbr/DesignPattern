@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DesignPattern.Creational.Builders
 {
@@ -31,16 +31,15 @@ namespace DesignPattern.Creational.Builders
         public static PersonBuilder WorksAsA
             (this PersonBuilder builder, string position)
         {
-            builder.Actions.Add(p =>
-            {
-                p.Position = position;
-            });
+            builder.Actions.Add(p => { p.Position = position; });
             return builder;
         }
     }
 
-    internal class FunctionalBuilder : IExecute
+    [TestClass]
+    public class FunctionalBuilder : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             var pb = new PersonBuilder();

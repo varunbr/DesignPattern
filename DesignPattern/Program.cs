@@ -2,7 +2,7 @@
 
 namespace DesignPattern
 {
-    internal class Program
+    public class Program
     {
         
     }

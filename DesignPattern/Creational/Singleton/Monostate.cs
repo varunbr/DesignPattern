@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DesignPattern.Creational.Singleton
 {
@@ -25,8 +25,10 @@ namespace DesignPattern.Creational.Singleton
         }
     }
 
-    internal class Monostate : IExecute
+    [TestClass]
+    public class Monostate : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             var ceo = new ChiefExecutiveOfficer();

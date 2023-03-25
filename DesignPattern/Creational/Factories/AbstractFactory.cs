@@ -1,11 +1,13 @@
-﻿namespace DesignPattern.Creational.Factories
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace DesignPattern.Creational.Factories
 {
     public interface IHotDrink
     {
         void Consume();
     }
 
-    internal class Tea : IHotDrink
+    public class Tea : IHotDrink
     {
         public void Consume()
         {
@@ -13,7 +15,7 @@
         }
     }
 
-    internal class Coffee : IHotDrink
+    public class Coffee : IHotDrink
     {
         public void Consume()
         {
@@ -26,7 +28,7 @@
         IHotDrink Prepare(int amount);
     }
 
-    internal class TeaFactory : IHotDrinkFactory
+    public class TeaFactory : IHotDrinkFactory
     {
         public IHotDrink Prepare(int amount)
         {
@@ -35,7 +37,7 @@
         }
     }
 
-    internal class CoffeeFactory : IHotDrinkFactory
+    public class CoffeeFactory : IHotDrinkFactory
     {
         public IHotDrink Prepare(int amount)
         {
@@ -48,14 +50,15 @@
     {
         public enum AvailableDrink // violates open-closed
         {
-            Coffee, Tea
+            Coffee,
+            Tea
         }
 
         private Dictionary<AvailableDrink, IHotDrinkFactory> factories =
-          new Dictionary<AvailableDrink, IHotDrinkFactory>();
+            new Dictionary<AvailableDrink, IHotDrinkFactory>();
 
         private List<Tuple<string, IHotDrinkFactory>> namedFactories =
-          new List<Tuple<string, IHotDrinkFactory>>();
+            new List<Tuple<string, IHotDrinkFactory>>();
 
         public HotDrinkMachine()
         {
@@ -71,7 +74,7 @@
                 if (typeof(IHotDrinkFactory).IsAssignableFrom(t) && !t.IsInterface)
                 {
                     namedFactories.Add(Tuple.Create(
-                      t.Name.Replace("Factory", string.Empty), (IHotDrinkFactory)Activator.CreateInstance(t)));
+                        t.Name.Replace("Factory", string.Empty), (IHotDrinkFactory)Activator.CreateInstance(t)));
                 }
             }
         }
@@ -102,6 +105,7 @@
                         return namedFactories[i].Item2.Prepare(amount);
                     }
                 }
+
                 Console.WriteLine("Incorrect input, try again.");
             }
         }
@@ -112,8 +116,10 @@
         //}
     }
 
-    internal class AbstractFactory : IExecute
+    [TestClass]
+    public class AbstractFactory : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             var machine = new HotDrinkMachine();

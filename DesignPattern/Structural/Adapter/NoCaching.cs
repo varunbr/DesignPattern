@@ -1,10 +1,12 @@
-﻿using MoreLinq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MoreLinq;
 using System.Collections.ObjectModel;
 using static System.Console;
 
 namespace DesignPattern.Structural.Adapter
 {
-    internal class NoCaching : IExecute
+    [TestClass]
+    public class NoCaching : IExecute
     {
         public class Point
         {
@@ -37,7 +39,6 @@ namespace DesignPattern.Structural.Adapter
 
         public class VectorObject : Collection<Line>
         {
-
         }
 
         public class VectorRectangle : VectorObject
@@ -53,11 +54,12 @@ namespace DesignPattern.Structural.Adapter
 
         public class LineToPointAdapter : Collection<Point>
         {
-            private static int count = 0;
+            private static int _count = 0;
 
             public LineToPointAdapter(Line line)
             {
-                WriteLine($"{++count}: Generating points for line [{line.Start.X},{line.Start.Y}]-[{line.End.X},{line.End.Y}] (no caching)");
+                WriteLine(
+                    $"{++_count}: Generating points for line [{line.Start.X},{line.Start.Y}]-[{line.End.X},{line.End.Y}] (no caching)");
 
                 int left = Math.Min(line.Start.X, line.End.X);
                 int right = Math.Max(line.Start.X, line.End.X);
@@ -83,7 +85,7 @@ namespace DesignPattern.Structural.Adapter
             }
         }
 
-        private static readonly List<VectorObject> vectorObjects = new List<VectorObject>
+        private static readonly List<VectorObject> VectorObjects = new List<VectorObject>
         {
             new VectorRectangle(1, 1, 10, 10),
             new VectorRectangle(3, 3, 6, 6)
@@ -97,7 +99,7 @@ namespace DesignPattern.Structural.Adapter
 
         private static void Draw()
         {
-            foreach (var vo in vectorObjects)
+            foreach (var vo in VectorObjects)
             {
                 foreach (var line in vo)
                 {
@@ -106,6 +108,8 @@ namespace DesignPattern.Structural.Adapter
                 }
             }
         }
+
+        [TestMethod]
         public void Execute()
         {
             Draw();

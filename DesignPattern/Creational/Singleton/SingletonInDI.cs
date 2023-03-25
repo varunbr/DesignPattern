@@ -1,9 +1,11 @@
 ﻿using Autofac;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static System.Console;
 
 namespace DesignPattern.Creational.Singleton
 {
-    internal class SingletonInDI : IExecute
+    [TestClass]
+    public class SingletonInDi : IExecute
     {
         public class Foo
         {
@@ -17,8 +19,9 @@ namespace DesignPattern.Creational.Singleton
 
         public class EventBroker
         {
-
         }
+
+        [TestMethod]
         public void Execute()
         {
             var builder = new ContainerBuilder();

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Features.Metadata;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DesignPattern.Structural.Adapter
 {
@@ -71,8 +72,10 @@ namespace DesignPattern.Structural.Adapter
         }
     }
 
-    internal class Autofac : IExecute
+    [TestClass]
+    public class Autofac : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             // for each ICommand, a ToolbarButton is created to wrap it, and all

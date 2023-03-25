@@ -1,10 +1,13 @@
-﻿namespace DesignPattern.Creational.Builders
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace DesignPattern.Creational.Builders
 {
     public enum CarType
     {
         Sedan,
         Crossover
     };
+
     public class Car
     {
         public CarType Type;
@@ -54,6 +57,7 @@
                     case CarType.Sedan when size < 15 || size > 17:
                         throw new ArgumentException($"Wrong size of wheel for {car.Type}.");
                 }
+
                 car.WheelSize = size;
                 return this;
             }
@@ -65,8 +69,10 @@
         }
     }
 
-    internal class StepwiseBuilder : IExecute
+    [TestClass]
+    public class StepwiseBuilder : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             var car = CarBuilder.Create()

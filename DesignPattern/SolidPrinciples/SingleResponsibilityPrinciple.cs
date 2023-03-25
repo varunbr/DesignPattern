@@ -1,4 +1,6 @@
-﻿namespace DesignPattern.SolidPrinciples
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace DesignPattern.SolidPrinciples
 {
     /// <summary>
     /// A class should have only one reason to change.
@@ -7,8 +9,10 @@
     /// spread across multiple classes or mixed with other responsibilities.
     /// The reason is that more changes requested in the future, the more changes the class need to apply.
     /// </summary>
-    internal class SingleResponsibilityPrinciple : IExecute
+    [TestClass]
+    public class SingleResponsibilityPrinciple : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             throw new NotImplementedException();

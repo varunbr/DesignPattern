@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text;
 using static System.Console;
 
 namespace DesignPattern.Creational.Builders
@@ -11,7 +12,6 @@ namespace DesignPattern.Creational.Builders
 
         public HtmlElement()
         {
-
         }
 
         public HtmlElement(string name, string text)
@@ -82,8 +82,10 @@ namespace DesignPattern.Creational.Builders
         HtmlElement root = new HtmlElement();
     }
 
+    [TestClass]
     public class Builder : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             // if you want to build a simple HTML paragraph using StringBuilder
@@ -102,6 +104,7 @@ namespace DesignPattern.Creational.Builders
             {
                 sb.AppendFormat("<li>{0}</li>", word);
             }
+
             sb.Append("</ul>");
             WriteLine(sb);
 

@@ -1,6 +1,7 @@
 ﻿using MoreLinq;
 using System.Collections;
 using System.Collections.ObjectModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static System.Console;
 
 namespace DesignPattern.Structural.Adapter
@@ -93,16 +94,17 @@ namespace DesignPattern.Structural.Adapter
 
     public class LineToPointAdapter : IEnumerable<Point>
     {
-        private static int count = 0;
-        static Dictionary<int, List<Point>> cache = new Dictionary<int, List<Point>>();
+        private static int _count = 0;
+        static Dictionary<int, List<Point>> _cache = new Dictionary<int, List<Point>>();
         private int hash;
 
         public LineToPointAdapter(Line line)
         {
             hash = line.GetHashCode();
-            if (cache.ContainsKey(hash)) return; // we already have it
+            if (_cache.ContainsKey(hash)) return; // we already have it
 
-            WriteLine($"{++count}: Generating points for line [{line.Start.X},{line.Start.Y}]-[{line.End.X},{line.End.Y}] (with caching)");
+            WriteLine(
+                $"{++_count}: Generating points for line [{line.Start.X},{line.Start.Y}]-[{line.End.X},{line.End.Y}] (with caching)");
             //                                                 ^^^^
 
             List<Point> points = new List<Point>();
@@ -129,12 +131,12 @@ namespace DesignPattern.Structural.Adapter
                 }
             }
 
-            cache.Add(hash, points);
+            _cache.Add(hash, points);
         }
 
         public IEnumerator<Point> GetEnumerator()
         {
-            return cache[hash].GetEnumerator();
+            return _cache[hash].GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -142,9 +144,11 @@ namespace DesignPattern.Structural.Adapter
             return GetEnumerator();
         }
     }
-    internal class WithCaching : IExecute
+
+    [TestClass]
+    public class WithCaching : IExecute
     {
-        private static readonly List<VectorObject> vectorObjects = new List<VectorObject>
+        private static readonly List<VectorObject> VectorObjects = new List<VectorObject>
         {
             new VectorRectangle(1, 1, 10, 10),
             new VectorRectangle(3, 3, 6, 6)
@@ -158,7 +162,7 @@ namespace DesignPattern.Structural.Adapter
 
         private static void Draw()
         {
-            foreach (var vo in vectorObjects)
+            foreach (var vo in VectorObjects)
             {
                 foreach (var line in vo)
                 {
@@ -168,6 +172,7 @@ namespace DesignPattern.Structural.Adapter
             }
         }
 
+        [TestMethod]
         public void Execute()
         {
             Draw();

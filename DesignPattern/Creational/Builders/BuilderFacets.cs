@@ -1,8 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DesignPattern.Creational.Builders
 {
-    internal class BuilderFacets : IExecute
+    [TestClass]
+    public class BuilderFacets : IExecute
     {
         public class Person
         {
@@ -16,7 +17,8 @@ namespace DesignPattern.Creational.Builders
 
             public override string ToString()
             {
-                return $"{nameof(StreetAddress)}: {StreetAddress}, {nameof(Postcode)}: {Postcode}, {nameof(City)}: {City}, {nameof(CompanyName)}: {CompanyName}, {nameof(Position)}: {Position}, {nameof(AnnualIncome)}: {AnnualIncome}";
+                return
+                    $"{nameof(StreetAddress)}: {StreetAddress}, {nameof(Postcode)}: {Postcode}, {nameof(City)}: {City}, {nameof(CompanyName)}: {CompanyName}, {nameof(Position)}: {Position}, {nameof(AnnualIncome)}: {AnnualIncome}";
             }
         }
 
@@ -85,9 +87,9 @@ namespace DesignPattern.Creational.Builders
                 person.City = city;
                 return this;
             }
-
         }
 
+        [TestMethod]
         public void Execute()
         {
             var pb = new PersonBuilder();

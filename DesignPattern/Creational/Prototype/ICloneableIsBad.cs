@@ -1,9 +1,11 @@
-﻿using static System.Console;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static System.Console;
 
 namespace DesignPattern.Creational.Prototype
 {
     // ReSharper disable once InconsistentNaming
-    internal class ICloneableIsBad : IExecute
+    [TestClass]
+    public class ICloneableIsBad : IExecute
     {
         // ICloneable is ill-specified
 
@@ -51,6 +53,7 @@ namespace DesignPattern.Creational.Prototype
             }
         }
 
+        [TestMethod]
         public void Execute()
         {
             var john = new Person(new[] { "John", "Smith" }, new Address("London Road", 123));

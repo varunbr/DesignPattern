@@ -1,13 +1,15 @@
-﻿namespace DesignPattern.Creational.Factories
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace DesignPattern.Creational.Factories
 {
     public class Point
     {
-        private double _x, _y;
+        private double x, y;
 
         protected Point(double x, double y)
         {
-            this._x = x;
-            this._y = y;
+            this.x = x;
+            this.y = y;
         }
 
         public Point(double a,
@@ -17,12 +19,12 @@
             switch (cs)
             {
                 case CoordinateSystem.Polar:
-                    _x = a * Math.Cos(b);
-                    _y = a * Math.Sin(b);
+                    x = a * Math.Cos(b);
+                    y = a * Math.Sin(b);
                     break;
                 default:
-                    _x = a;
-                    _y = b;
+                    x = a;
+                    y = b;
                     break;
             }
 
@@ -75,8 +77,10 @@
         }
     }
 
-    internal class Factory : IExecute
+    [TestClass]
+    public class Factory : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             var p1 = new Point(2, 3, Point.CoordinateSystem.Cartesian);

@@ -1,8 +1,6 @@
-﻿using NUnit.Framework;
-
-namespace DesignPattern
+﻿namespace DesignPattern
 {
-    internal interface IExecute
+    public interface IExecute
     {
         void Execute();
     }

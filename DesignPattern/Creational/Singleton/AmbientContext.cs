@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text;
 
 namespace DesignPattern.Creational.Singleton
 {
@@ -7,28 +8,29 @@ namespace DesignPattern.Creational.Singleton
     {
         public int WallHeight = 0;
         public int WallThickness = 300; // etc.
-        private static Stack<BuildingContext> stack
+
+        private static Stack<BuildingContext> _stack
             = new Stack<BuildingContext>();
 
         static BuildingContext()
         {
             // ensure there's at least one state
-            stack.Push(new BuildingContext(0));
+            _stack.Push(new BuildingContext(0));
         }
 
         public BuildingContext(int wallHeight)
         {
             WallHeight = wallHeight;
-            stack.Push(this);
+            _stack.Push(this);
         }
 
-        public static BuildingContext Current => stack.Peek();
+        public static BuildingContext Current => _stack.Peek();
 
         public void Dispose()
         {
             // not strictly necessary
-            if (stack.Count > 1)
-                stack.Pop();
+            if (_stack.Count > 1)
+                _stack.Pop();
         }
     }
 
@@ -47,17 +49,17 @@ namespace DesignPattern.Creational.Singleton
 
     public struct Point
     {
-        private int X, Y;
+        private int x, y;
 
         public Point(int x, int y)
         {
-            X = x;
-            Y = y;
+            this.x = x;
+            this.y = y;
         }
 
         public override string ToString()
         {
-            return $"{nameof(X)}: {X}, {nameof(Y)}: {Y}";
+            return $"{nameof(x)}: {x}, {nameof(y)}: {y}";
         }
     }
 
@@ -90,16 +92,18 @@ namespace DesignPattern.Creational.Singleton
         }
     }
 
-    internal class AmbientContext : IExecute
+    [TestClass]
+    public class AmbientContext : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             var house = new Building();
 
             // ground floor
             //var e = 0;
-            house.Walls.Add(new Wall(new Point(0, 0), new Point(5000, 0)/*, e*/));
-            house.Walls.Add(new Wall(new Point(0, 0), new Point(0, 4000)/*, e*/));
+            house.Walls.Add(new Wall(new Point(0, 0), new Point(5000, 0) /*, e*/));
+            house.Walls.Add(new Wall(new Point(0, 0), new Point(0, 4000) /*, e*/));
 
             // first floor
             //e = 3500;
@@ -111,7 +115,7 @@ namespace DesignPattern.Creational.Singleton
 
             // back to ground again
             // e = 0;
-            house.Walls.Add(new Wall(new Point(5000, 0), new Point(5000, 4000)/*, e*/));
+            house.Walls.Add(new Wall(new Point(5000, 0), new Point(5000, 4000) /*, e*/));
 
             Console.WriteLine(house);
         }

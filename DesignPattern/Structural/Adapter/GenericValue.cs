@@ -1,4 +1,6 @@
-﻿namespace DesignPattern.Structural.Adapter
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace DesignPattern.Structural.Adapter
 {
     // Vector2f, Vector3i
     public interface IInteger
@@ -19,64 +21,64 @@
         }
     }
 
-    public class Vector<TSelf, T, D>
-      where D : IInteger, new()
-      where TSelf : Vector<TSelf, T, D>, new()
+    public class Vector<TSelf, T, TD>
+        where TD : IInteger, new()
+        where TSelf : Vector<TSelf, T, TD>, new()
     {
-        protected T[] data;
+        protected T[] Data;
 
         public Vector()
         {
-            data = new T[new D().Value];
+            Data = new T[new TD().Value];
         }
 
         public Vector(params T[] values)
         {
-            var requiredSize = new D().Value;
-            data = new T[requiredSize];
+            var requiredSize = new TD().Value;
+            Data = new T[requiredSize];
 
             var providedSize = values.Length;
 
             for (int i = 0; i < Math.Min(requiredSize, providedSize); ++i)
-                data[i] = values[i];
+                Data[i] = values[i];
         }
 
         public static TSelf Create(params T[] values)
         {
             var result = new TSelf();
-            var requiredSize = new D().Value;
-            result.data = new T[requiredSize];
+            var requiredSize = new TD().Value;
+            result.Data = new T[requiredSize];
 
             var providedSize = values.Length;
 
             for (int i = 0; i < Math.Min(requiredSize, providedSize); ++i)
-                result.data[i] = values[i];
+                result.Data[i] = values[i];
 
             return result;
         }
 
         public T this[int index]
         {
-            get => data[index];
-            set => data[index] = value;
+            get => Data[index];
+            set => Data[index] = value;
         }
 
         public T X
         {
-            get => data[0];
-            set => data[0] = value;
+            get => Data[0];
+            set => Data[0] = value;
         }
     }
 
-    public class VectorOfFloat<TSelf, D>
-      : Vector<TSelf, float, D>
-      where D : IInteger, new()
-      where TSelf : Vector<TSelf, float, D>, new()
+    public class VectorOfFloat<TSelf, TD>
+        : Vector<TSelf, float, TD>
+        where TD : IInteger, new()
+        where TSelf : Vector<TSelf, float, TD>, new()
     {
     }
 
-    public class VectorOfInt<D> : Vector<VectorOfInt<D>, int, D>
-      where D : IInteger, new()
+    public class VectorOfInt<TD> : Vector<VectorOfInt<TD>, int, TD>
+        where TD : IInteger, new()
     {
         public VectorOfInt()
         {
@@ -86,11 +88,11 @@
         {
         }
 
-        public static VectorOfInt<D> operator +
-          (VectorOfInt<D> lhs, VectorOfInt<D> rhs)
+        public static VectorOfInt<TD> operator +
+            (VectorOfInt<TD> lhs, VectorOfInt<TD> rhs)
         {
-            var result = new VectorOfInt<D>();
-            var dim = new D().Value;
+            var result = new VectorOfInt<TD>();
+            var dim = new TD().Value;
             for (int i = 0; i < dim; i++)
             {
                 result[i] = lhs[i] + rhs[i];
@@ -100,38 +102,40 @@
         }
     }
 
-    public class Vector2i : VectorOfInt<Dimensions.Two>
+    public class Vector2I : VectorOfInt<Dimensions.Two>
     {
-        public Vector2i()
+        public Vector2I()
         {
         }
 
-        public Vector2i(params int[] values) : base(values)
+        public Vector2I(params int[] values) : base(values)
         {
         }
     }
 
-    public class Vector3f
-      : VectorOfFloat<Vector3f, Dimensions.Three>
+    public class Vector3F
+        : VectorOfFloat<Vector3F, Dimensions.Three>
     {
         public override string ToString()
         {
-            return $"{string.Join(",", data)}";
+            return $"{string.Join(",", Data)}";
         }
     }
 
-    internal class GenericValue : IExecute
+    [TestClass]
+    public class GenericValue : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
-            var v = new Vector2i(1, 2);
+            var v = new Vector2I(1, 2);
             v[0] = 0;
 
-            var vv = new Vector2i(3, 2);
+            var vv = new Vector2I(3, 2);
 
             var result = v + vv;
 
-            Vector3f u = Vector3f.Create(3.5f, 2.2f, 1);
+            Vector3F u = Vector3F.Create(3.5f, 2.2f, 1);
         }
     }
 }

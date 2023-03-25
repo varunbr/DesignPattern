@@ -1,10 +1,11 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using static System.Console;
 
 namespace DesignPattern.Creational.Prototype
 {
-     static class ExtensionMethods
+    static class ExtensionMethods
     {
         public static T DeepCopy2<T>(this T self)
         {
@@ -41,8 +42,10 @@ namespace DesignPattern.Creational.Prototype
         }
     }
 
-    internal class CopyThroughSerialization : IExecute
+    [TestClass]
+    public class CopyThroughSerialization : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             Foo foo = new Foo { Stuff = 42, Whatever = "abc" };

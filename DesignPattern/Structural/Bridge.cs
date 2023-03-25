@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static System.Console;
 
 namespace DesignPattern.Structural
@@ -26,13 +27,13 @@ namespace DesignPattern.Structural
 
     public abstract class Shape
     {
-        protected IRenderer renderer;
+        protected IRenderer Renderer;
 
         // a bridge between the shape that's being drawn an
         // the component which actually draws it
         public Shape(IRenderer renderer)
         {
-            this.renderer = renderer;
+            this.Renderer = renderer;
         }
 
         public abstract void Draw();
@@ -50,7 +51,7 @@ namespace DesignPattern.Structural
 
         public override void Draw()
         {
-            renderer.RenderCircle(radius);
+            Renderer.RenderCircle(radius);
         }
 
         public override void Resize(float factor)
@@ -59,8 +60,10 @@ namespace DesignPattern.Structural
         }
     }
 
-    internal class Bridge : IExecute
+    [TestClass]
+    public class Bridge : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             //var raster = new RasterRenderer();

@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static System.Console;
 
 namespace DesignPattern.Creational.Prototype
 {
@@ -48,8 +49,11 @@ namespace DesignPattern.Creational.Prototype
             return $"{nameof(Name)}: {Name}, {nameof(Address)}: {Address}";
         }
     }
-    internal class CopyConstructor : IExecute
+
+    [TestClass]
+    public class CopyConstructor : IExecute
     {
+        [TestMethod]
         public void Execute()
         {
             var john = new Employee("John", new Address("123 London Road", "London", "UK"));

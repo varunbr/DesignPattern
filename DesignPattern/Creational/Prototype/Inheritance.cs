@@ -1,4 +1,6 @@
-﻿namespace DesignPattern.Creational.Prototype
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace DesignPattern.Creational.Prototype
 {
     static class DeepCopyExtensions
     {
@@ -15,6 +17,7 @@
         }
     }
 
+    [TestClass]
     public class Inheritance : IExecute
     {
         public interface IDeepCopyable<T> where T : new()
@@ -42,7 +45,6 @@
 
             public Address()
             {
-
             }
 
             public override string ToString()
@@ -58,7 +60,6 @@
         }
 
 
-
         public class Person : IDeepCopyable<Person>
         {
             public string[] Names;
@@ -66,7 +67,6 @@
 
             public Person()
             {
-
             }
 
             public Person(string[] names, Address address)
@@ -103,8 +103,7 @@
             }
         }
 
-
-
+        [TestMethod]
         public void Execute()
         {
             var john = new Employee();

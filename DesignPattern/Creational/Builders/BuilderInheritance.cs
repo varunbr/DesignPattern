@@ -1,6 +1,9 @@
-﻿namespace DesignPattern.Creational.Builders
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace DesignPattern.Creational.Builders
 {
-    internal class BuilderInheritance : IExecute
+    [TestClass]
+    public class BuilderInheritance : IExecute
     {
         public class Person
         {
@@ -12,7 +15,9 @@
 
             public class Builder : PersonBirthDateBuilder<Builder>
             {
-                internal Builder() { }
+                public Builder()
+                {
+                }
             }
 
             public static Builder New => new Builder();
@@ -70,9 +75,9 @@
 
         class SomeBuilder : PersonBirthDateBuilder<SomeBuilder>
         {
-
         }
 
+        [TestMethod]
         public void Execute()
         {
             var me = Person.New
