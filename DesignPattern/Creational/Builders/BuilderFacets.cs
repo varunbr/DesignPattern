@@ -15,6 +15,8 @@ namespace DesignPattern.Creational.Builders
 
             public int AnnualIncome;
 
+            public List<string> Hobbies = new();
+
             public override string ToString()
             {
                 return
@@ -29,6 +31,13 @@ namespace DesignPattern.Creational.Builders
 
             public PersonAddressBuilder Lives => new PersonAddressBuilder(person);
             public PersonJobBuilder Works => new PersonJobBuilder(person);
+
+            public PersonBuilder AddHobbies(Func<string, string> func)
+            {
+                var hobby = func("ABC_");
+                person.Hobbies.Add(hobby);
+                return this;
+            }
 
             public static implicit operator Person(PersonBuilder pb)
             {
@@ -101,7 +110,8 @@ namespace DesignPattern.Creational.Builders
                 .Works
                 .At("Fabrikam")
                 .AsA("Engineer")
-                .Earning(123000);
+                .Earning(123000)
+                .AddHobbies(c => $"{c}_DEF");
 
             Console.WriteLine(person);
         }
